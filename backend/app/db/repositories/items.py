@@ -199,21 +199,17 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
             # fmt: on
 
         if title:
-            query_params.append(f"{title}%")
+            query_params.append(f"{title}")
             query_params_count += 1
 
             # fmt: off
-            query = query.join(
-                title,
-            ).on(
-                (
-                    title.item_id in Query.from_(
-                        items,
-                    ).where(
-                        items.title.like(
-                            Parameter(query_params_count)
-                        )
-                    )
+            query = Query.from_(
+            items,
+        ).select(
+            items.slug,
+        ).where(
+            items.title.like(
+                Parameter(query_params_count)
                 )
             )
             # fmt: on
