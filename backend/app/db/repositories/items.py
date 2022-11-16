@@ -206,9 +206,7 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
             query = query.join(
                 title,
             ).on(
-                (items.id == title.item_id) & (
-                    favorites.user_id == Query.from_(
-                        users,
+                (items.id == title.item_id)
                     ).where(
                         users.username == Parameter(query_params_count),
                     ).select(
