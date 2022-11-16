@@ -206,13 +206,15 @@ class ItemsRepository(BaseRepository):  # noqa: WPS214
             query = query.join(
                 title,
             ).on(
-                (items.id == title.item_id)
+                (
+                    title.item_id in Query.from_(
+                        items,
                     ).where(
-                        users.username == Parameter(query_params_count),
-                    ).select(
-                        users.id,
+                        items.title.like(
+                            Parameter(query_params_count)
+                        )
                     )
-                ),
+                )
             )
             # fmt: on
 
